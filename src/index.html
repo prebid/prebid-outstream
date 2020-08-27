@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- https://blog.videojs.com/hiding-and-showing-video-player-controls/ -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Blog Post - Start Bootstrap Template</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <style>
+        body {
+            padding-top: 56px;
+        }
+    </style>
+    <!-- Bootstrap core JavaScript, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- Prebid.js -->
+    <script src="https://stagingva.pubmatic.com:8443/wrapper/fluid_player_outstream/prebid3.23.0.js"></script>
+
+
+    <!-- Prebid setup -->
+    <script>
+
+        var pbjs = pbjs || {}; 
+        pbjs.que = pbjs.que || [];  
+        var videoAdUnit = [
+            {
+                code: 'video1', 
+                mediaTypes: {
+                    video: {
+                        playerSize: [640, 480], 
+                        context: 'outstream'
+                    } 
+                }, 
+                renderer: {
+                    url: 'bundle.js',
+                    render: function (bid) {
+                        var config = {
+                            width: 640,
+                            height: 480,
+                            vastTimeout: 5000,
+                            maxAllowedVastTagRedirects: 3,
+                            allowVpaid: false,
+                            autoPlay: true,
+                            preload: true,
+                            mute: true,
+                            adText: 'This is sample adtext.'
+                        };
+                        setTimeout( () => {
+                            try{
+                                window.player = outstreamPlayer(bid, 'video1', config);
+                            }catch(e){
+                                console.error(e);
+                                console.error("Error in ad rendering!");
+                            }
+                        }, 3000);
+                    }
+                },
+                bids: [  
+                    { // requests bids from PubMatic partner
+                        bidder: 'pubmatic',
+                        params: {
+                            publisherId: '45710',
+                            videoAdUnit: '2995549',
+                            adSlot: '2995549@640x480',
+                            video: {
+                                skipppable: false,
+                                playback_methods: ['auto_play_sound_off'],
+                                minduration: 5,
+                                maxduration: 30,
+                                mimes: ['video/mp4','video/x-flv'],
+                                placement: 1
+                            }
+                        }
+                    }
+                ] 
+            }
+        ]; 
+
+        pbjs.que.push(function() {
+            pbjs.addAdUnits(videoAdUnit); 
+            pbjs.setConfig({
+                debug: true, 
+                cache: {
+                    url: 'https://prebid.adnxs.com/pbc/v1/cache'
+                } 
+            }); 
+            pbjs.requestBids({
+                timeout: 1000,
+                bidsBackHandler: function(bids) {
+                    var highestCpmBids = pbjs.getHighestCpmBids('video1');
+                    // window.highestCpmBids = highestCpmBids;
+                    pbjs.renderAd(document, highestCpmBids[0].adId);
+                }
+            });
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+        <a class="navbar-brand" href="#">
+            <!-- <img width="100" height="40" class="img-fluid rounded" src="pubmatic-logo-1.png"> -->
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home
+                <span class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Services</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contact</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+
+            <!-- Title -->
+            <h3 class="mt-4">PubMatic Prebid Outstream Video Setup</h1>
+
+            <!-- Author -->
+            <p class="">
+            by
+            <a href="#">@PubMatic</a>
+            </p>
+
+            <hr>
+
+            <!-- Date/Time -->
+            <p>Posted on July 15, 2020 at 12:00 PM</p>
+
+            <hr>
+
+            <!-- Preview Image -->
+            <!-- <img class="img-fluid rounded" src="pubmatic-logo-1.png"> -->
+
+            <hr>
+
+            <!-- Post Content -->
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+            <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus, vero, obcaecati, aut, error quam sapiente nemo saepe quibusdam sit excepturi nam quia corporis eligendi eos magni recusandae laborum minus inventore?</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos, doloribus, dolorem iusto blanditiis unde eius illum consequuntur neque dicta incidunt ullam ea hic porro optio ratione repellat perspiciatis. Enim, iure!</p>
+
+            <blockquote class="blockquote">
+            <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+            <footer class="blockquote-footer">Someone famous in
+                <cite title="Source Title">Source Title</cite>
+            </footer>
+            </blockquote>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error, nostrum, aliquid, animi, ut quas placeat totam sunt tempora commodi nihil ullam alias modi dicta saepe minima ab quo voluptatem obcaecati?</p>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum, dolor quis. Sunt, ut, explicabo, aliquam tenetur ratione tempore quidem voluptates cupiditate voluptas illo saepe quaerat numquam recusandae? Qui, necessitatibus, est!</p>
+
+            <hr>
+            <!-- Outstream video ad slot -->
+            <div id="video1"></div>
+            <hr>
+            <!-- Comments Form -->
+            <div class="card my-4">
+            <h5 class="card-header">Leave a Comment:</h5>
+            <div class="card-body">
+                <form>
+                <div class="form-group">
+                    <textarea class="form-control" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            </div>
+
+            <!-- Single Comment -->
+            <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="https://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+            </div>
+            </div>
+
+            <!-- Comment with nested comments -->
+            <div class="media mb-4">
+            <img class="d-flex mr-3 rounded-circle" src="https://placehold.it/50x50" alt="">
+            <div class="media-body">
+                <h5 class="mt-0">Commenter Name</h5>
+                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+                <div class="media mt-4">
+                <img class="d-flex mr-3 rounded-circle" src="https://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <h5 class="mt-0">Commenter Name</h5>
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                </div>
+                </div>
+
+                <div class="media mt-4">
+                <img class="d-flex mr-3 rounded-circle" src="https://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <h5 class="mt-0">Commenter Name</h5>
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                </div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Search Widget -->
+            <div class="card my-4">
+            <h5 class="card-header">Search</h5>
+            <div class="card-body">
+                <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-secondary" type="button">Go!</button>
+                </span>
+                </div>
+            </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="card my-4">
+            <h5 class="card-header">Products</h5>
+            <div class="card-body">
+                <div class="row">
+                <div class="col-lg-6">
+                    <ul class="list-unstyled mb-0">
+                    <li>
+                        <a href="#">Video</a>
+                    </li>
+                    <li>
+                        <a href="#">Banner</a>
+                    </li>
+                    <li>
+                        <a href="#">Native</a>
+                    </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="list-unstyled mb-0">
+                    <li>
+                        <a href="#">PMP</a>
+                    </li>
+                    <li>
+                        <a href="#">Audience</a>
+                    </li>
+                    <li>
+                        <a href="#">OpenWrap</a>
+                    </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+            </div>
+
+            
+
+        </div>
+
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+        <div class="container">
+        <p class="m-0 text-center text-white">Sample Prebid Outstream Test Page</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+</body>
+
+</html>
