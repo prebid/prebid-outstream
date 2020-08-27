@@ -1,0 +1,14 @@
+{
+    "parser": "babel-eslint",
+    "extends": [],
+    "rules": {
+        "indent": ["error", 4],
+        "comma-dangle": 0
+    },
+    "env":{
+        "es6":true,
+        "node": true,
+        "browser": true,
+        "jest/globals": true
+    }
+}
