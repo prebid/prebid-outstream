@@ -4,7 +4,7 @@ At a high level, a player adapter is responsible for:
 2. Play the outstream video Ad.
 3. Implementing functions mentioned in GenericPlayer class.
 
-This page has instructions for writing your own player adapter. The instructions here try to walk you through some of the code you’ll need to write for your adapter. When in doubt, use [the working adapters in the GitHub repo](https://github.com/prebid/prebid-outstream/src/players/fluid-player/FluidPlayer.js) for reference.
+This page has instructions for writing your own player adapter. The instructions here try to walk you through some of the code you’ll need to write for your adapter. When in doubt, use [the working adapters in the GitHub repo](https://github.com/prebid/prebid-outstream/blob/master/src/players/fluid-player/FluidPlayer.js) for reference.
 
 ## Contributing
 Contributions are always welcome. To contribute, [fork](https://help.github.com/articles/fork-a-repo/) prebid-outstream, commit your changes, and [open a pull request](https://help.github.com/articles/using-pull-requests/) against the master branch.
@@ -24,7 +24,7 @@ Before a Pull Request will be considered for merge:
 6. Do a conditional import of the new player class depending on the value of *SELECTED_PLAYER* environment variable in the import section of *PlayerFactory.js* file.
 7. Mention its entry in *PlayerFactory* class constructor function's switch statement and return its instance.
 8. To use this new player-plugin combination as a base player for the project, assign this new unique name generated in step #5 to *SELECTED_PLAYER* environment variable.
-9. Insert this new player entry in [README.md](https://github.com/prebid/prebid-outstream/README.md)
+9. Insert this new player entry in [README.md](https://github.com/prebid/prebid-outstream/blob/master/README.md)
 
 
 *Note 1:* Before raising the PR, please make sure the license of the player/plugin is compatible with the project.
