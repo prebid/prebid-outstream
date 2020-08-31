@@ -59,7 +59,7 @@ The project allows the user to provide configuration at two levels:
 To provide the configuration at build time use the **.env.development** and **env.production** files for development and production modes respectively. Some of the available options are:
 
 ##### Base Player
-This project allows user to select the base player of his choice from the available player list. If your favourite player is not available in the supported player list and you are interested in contributing to the project to provide its support, then please refer the document [How to add a new player support](https://github.com/prebid/prebid-outstream/src/players).
+This project allows user to select the base player of his choice from the available player list. If your favourite player is not available in the supported player list and you are interested in contributing to the project to provide its support, then please refer the document [How to add a new player support](https://github.com/prebid/prebid-outstream/blob/master/src/players/README.md).
 
 The user needs to provide his selected player in **SELECTED_PLAYER** environment variable from the given supported player list.
 
