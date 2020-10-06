@@ -1,4 +1,4 @@
-# Prebid Outstrean Renderer
+# Prebid Outstream Renderer
 
 > A free and open source library for publishers to quickly implement outstream renderer.
 
