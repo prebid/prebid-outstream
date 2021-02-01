@@ -44,7 +44,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, '../', 'dist'),
         publicPath: '/',
-        filename: 'ocm-renderer.js',
+        filename: 'bundle.js',
         library: 'outstreamPlayer',
         libraryTarget: 'var'
     },
