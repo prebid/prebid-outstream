@@ -99,9 +99,9 @@ export default class OutstreamPlayer {
                     this.player.pause();
                     // Set the flag that video is paused due to scrolling
                     this.isVideoPausedDueToScroll = true;
-                }                  
-            }	
-        }); 
+                }
+            }
+        });
     }
 
     insertVideoElement() {
@@ -129,5 +129,5 @@ export default class OutstreamPlayer {
             throw new Error('No element is present with provided element ID: ', this.elementId);
         }
     }
-    
+
 }
