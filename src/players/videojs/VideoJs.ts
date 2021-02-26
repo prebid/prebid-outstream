@@ -2,32 +2,33 @@ import GenericPlayer from '../GenericPlayer';
 import logger from '../../Logger';
 
 
-export default class VideoJs extends GenericPlayer{
-    constructor(){
+export default class VideoJs extends GenericPlayer {
+    constructor() {
         super();
         logger.debug("Inside videojs player constructor.");
     }
 
-    generatePlayerConfig(bid, elementId, genericConfiguration){
+    generatePlayerConfig(bid, elementId, genericConfiguration) {
         logger.debug("Inside VideoJs.generatePlayerConfig method.");
         this.bid = bid;
         this.elementId = elementId;
         this.genericConfiguration = genericConfiguration;
     }
 
-    setupPlayer(videoPlayerId){
+    setupPlayer(videoPlayerId) {
         logger.debug("Inside VideoJs.generatePlayerConfig method with player ID: " + videoPlayerId);
     }
 
-    play(){
+    play() {
         logger.debug("Inside VideoJs.play");
     }
 
-    pause(){
+    pause() {
         logger.debug("Inside VideoJs.pause");
     }
 
-    getIsVideoPlaying(){
+    getIsVideoPlaying() {
         logger.debug("Inside VideoJs.getIsVideoPlaying");
+        return false;
     }
 }
