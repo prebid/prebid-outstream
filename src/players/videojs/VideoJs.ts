@@ -1,34 +1,35 @@
-import GenericPlayer from '../GenericPlayer';
+import { GenericPlayer } from '../GenericPlayer';
 import logger from '../../Logger';
+import { prebidjs } from '../../types/prebidjs';
+import { GenericConfiguration } from '../../GenericConfiguration';
 
-
-export default class VideoJs extends GenericPlayer {
+export default class VideoJs implements GenericPlayer {
     constructor() {
-        super();
-        logger.debug("Inside videojs player constructor.");
+        logger.debug('Inside videojs player constructor.');
     }
 
-    generatePlayerConfig(bid, elementId, genericConfiguration) {
-        logger.debug("Inside VideoJs.generatePlayerConfig method.");
-        this.bid = bid;
-        this.elementId = elementId;
-        this.genericConfiguration = genericConfiguration;
-    }
+    generatePlayerConfig = (
+        _bid: prebidjs.IBid,
+        _elementId: string,
+        _genericConfiguration: GenericConfiguration
+    ) => {
+        logger.debug('Inside VideoJs.generatePlayerConfig method.');
+    };
 
     setupPlayer(videoPlayerId) {
-        logger.debug("Inside VideoJs.generatePlayerConfig method with player ID: " + videoPlayerId);
+        logger.debug('Inside VideoJs.generatePlayerConfig method with player ID: ' + videoPlayerId);
     }
 
     play() {
-        logger.debug("Inside VideoJs.play");
+        logger.debug('Inside VideoJs.play');
     }
 
     pause() {
-        logger.debug("Inside VideoJs.pause");
+        logger.debug('Inside VideoJs.pause');
     }
 
     getIsVideoPlaying() {
-        logger.debug("Inside VideoJs.getIsVideoPlaying");
+        logger.debug('Inside VideoJs.getIsVideoPlaying');
         return false;
     }
 }

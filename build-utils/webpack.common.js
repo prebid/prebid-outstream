@@ -3,13 +3,17 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.ts',
     module: {
         rules: [
             {
+                test: /\.ts$/,
+                exclude: /node_modules/,
+                loader: 'ts-loader' },
+            {
                 test: /\.(js)$/,
                 exclude: /node_modules/,
-                use: ['babel-loader', 'eslint-loader', 'webpack-conditional-loader']
+                use: ['eslint-loader', 'webpack-conditional-loader']
             },
             {
                 test: /\.(css)$/,
@@ -30,10 +34,11 @@ module.exports = {
     },
     resolve: {
         alias: {
-            '~' : path.resolve(__dirname, '../', 'node_modules')
+            '~': path.resolve(__dirname, '../', 'node_modules')
         },
-        extensions: ['*', '.js']
+        extensions: ['*', '.js', '.ts']
     },
+    devtool: 'source-map',
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
