@@ -1,21 +1,24 @@
 import { GenericConfiguration, genericConfigurationWithDefaults } from './GenericConfiguration';
 import { getPlayer as getConfiguredPlayer } from './PlayerFactory';
-import utils from './Utils';
 import logger from './Logger';
-import { prebidjs } from './types/prebidjs';
 import { GenericPlayer } from './players/GenericPlayer';
+import { Bid } from './types/bid';
+import { isOnScreen } from './Utils';
 
-const isBidObject = (bid: unknown): bid is prebidjs.IBid =>
-    bid && typeof bid === 'object' && !Array.isArray(bid);
+const isBidObject = (bid: unknown): bid is Bid =>
+    typeof bid === 'object' && bid !== null && !Array.isArray(bid) ? true : false;
 
 const isElementId = (elementId: unknown): elementId is string =>
     typeof elementId === 'string' && !!elementId.length && !!document.getElementById(elementId);
 
+const isGenericConfiguration = (config: unknown): config is GenericConfiguration =>
+    typeof config === 'object' && config !== null;
+
 export default class OutstreamPlayer {
-    private bid: prebidjs.IBid;
+    private bid: Bid;
     private elementId: string;
     private config: GenericConfiguration;
-    private element: HTMLElement;
+    private element: HTMLElement | null;
     private playerAvailable: boolean;
     private isVideoPausedDueToScroll: boolean;
     private player: GenericPlayer;
@@ -46,7 +49,9 @@ export default class OutstreamPlayer {
         this.element = document.getElementById(elementId);
 
         // Create config object
-        this.config = genericConfigurationWithDefaults(typeof config === 'object' ? config : {});
+        this.config = genericConfigurationWithDefaults(
+            isGenericConfiguration(config) ? config : {}
+        );
         logger.log(`Generic configuration: ${this.config}`);
 
         this.playerAvailable = false;
@@ -61,7 +66,7 @@ export default class OutstreamPlayer {
     insertPlayer() {
         logger.debug('Inside OutstreamPlayer.insertPlayer method.');
 
-        if (utils.isOnScreen(this.elementId)) {
+        if (isOnScreen(this.elementId)) {
             logger.log('Element is visible on the screen on document load, so setup the player.');
             this.setupPlayer();
         }
@@ -73,9 +78,17 @@ export default class OutstreamPlayer {
 
         // Once set, do not unset it
         this.playerAvailable = true;
-        this.element.style.display = 'block';
+
+        if (this.element) {
+            this.element.style.display = 'block';
+        }
+
         this.insertVideoElement();
-        this.player.setupPlayer(this.videoPlayerId);
+
+        if (this.videoPlayerId) {
+            this.player.setupPlayer(this.videoPlayerId);
+        }
+
         if (this.config.autoPlay) {
             logger.log('Calling the play function as autoplay is true.');
             this.player.play();
@@ -88,7 +101,7 @@ export default class OutstreamPlayer {
         window.addEventListener('scroll', () => {
             logger.log('Scroll event listener called!');
             // Player div is visible on the scren
-            if (utils.isOnScreen(this.elementId)) {
+            if (isOnScreen(this.elementId)) {
                 /* Pass element id/class you want to check */
                 logger.log('Element is visible on the player.');
                 if (this.playerAvailable) {

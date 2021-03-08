@@ -1,9 +1,9 @@
 import { GenericConfiguration } from '../GenericConfiguration';
-import { prebidjs } from '../types/prebidjs';
+import { Bid } from '../types/bid';
 
 export type GenericPlayer = {
     generatePlayerConfig: (
-        bid: prebidjs.IBid,
+        bid: Bid,
         elementId: string,
         genericConfiguration: GenericConfiguration
     ) => void;

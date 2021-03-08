@@ -1,7 +1,7 @@
 import { GenericPlayer } from '../GenericPlayer';
 import logger from '../../Logger';
-import { prebidjs } from '../../types/prebidjs';
 import { GenericConfiguration } from '../../GenericConfiguration';
+import { Bid } from '../../types/bid';
 
 export default class VideoJs implements GenericPlayer {
     constructor() {
@@ -9,14 +9,14 @@ export default class VideoJs implements GenericPlayer {
     }
 
     generatePlayerConfig = (
-        _bid: prebidjs.IBid,
+        _bid: Bid,
         _elementId: string,
         _genericConfiguration: GenericConfiguration
     ) => {
         logger.debug('Inside VideoJs.generatePlayerConfig method.');
     };
 
-    setupPlayer(videoPlayerId) {
+    setupPlayer(videoPlayerId: string) {
         logger.debug('Inside VideoJs.generatePlayerConfig method with player ID: ' + videoPlayerId);
     }
 

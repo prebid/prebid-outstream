@@ -1,9 +1,10 @@
 import OutstreamPlayer from './OutstreamPlayer';
 import logger from './Logger';
-import { prebidjs } from './types/prebidjs';
+import { Bid } from './types/bid';
+import { GenericConfiguration } from './GenericConfiguration';
 
 declare const window: {
-    outstreamPlayer: (bid: prebidjs.IBid, elementId: string, config) => OutstreamPlayer;
+    outstreamPlayer: (bid: Bid, elementId: string, config: GenericConfiguration) => OutstreamPlayer;
 };
 
 window.outstreamPlayer =

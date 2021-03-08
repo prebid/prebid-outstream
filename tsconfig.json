@@ -4,7 +4,14 @@
     "allowJs": true,
     "target": "es2015",
     "sourceMap": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "strict": true,
+    "strictPropertyInitialization": false
   },
   "include": [
     "./src/**/*"
