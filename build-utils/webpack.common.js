@@ -13,7 +13,7 @@ module.exports = {
             {
                 test: /\.(js)$/,
                 exclude: /node_modules/,
-                use: ['eslint-loader', 'webpack-conditional-loader']
+                use: ['babel-loader', 'eslint-loader', 'webpack-conditional-loader']
             },
             {
                 test: /\.(css)$/,
