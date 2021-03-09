@@ -9,10 +9,10 @@ import { Bid } from '../../types/bid';
 import { closeFullscreen } from '../../Utils';
 
 export default class FluidPlayer implements GenericPlayer {
-    private fluidPlayerConfig?: FluidPlayerConfig;
-    private player?: FluidPlayerLib;
-    private element: HTMLElement | null;
-    private isVideoPlaying = false;
+    public fluidPlayerConfig?: FluidPlayerConfig;
+    public player?: FluidPlayerLib;
+    public element: HTMLElement | null;
+    public isVideoPlaying = false;
 
     constructor() {
         logger.debug('Inside fluid player constructor.');
@@ -23,15 +23,15 @@ export default class FluidPlayer implements GenericPlayer {
         bid: Bid,
         elementId: string,
         genericConfiguration: GenericConfiguration
-    ) => {
+    ): void => {
         logger.debug('Inside FluidPlayer.generatePlayerConfig');
 
         // Check if valid elementId
-        if (document.getElementById(elementId) === null) {
+        this.element = document.getElementById(elementId);
+        if (!this.element) {
             logger.error(`No element present with element ID: ${elementId}`);
             throw new Error('Please provide a valid element ID.');
         }
-        this.element = document.getElementById(elementId);
 
         logger.log(`FluidPlayer-generatePlayerConfig ${JSON.stringify(genericConfiguration)}`);
 
@@ -39,7 +39,7 @@ export default class FluidPlayer implements GenericPlayer {
         logger.log(`this.fluidPlayerConfigObj ${JSON.stringify(this.fluidPlayerConfig)}`);
     };
 
-    setupPlayer(videoPlayerId: string) {
+    setupPlayer(videoPlayerId: string): void {
         logger.debug(`Insid FluidPlayer.setupPlayer with player ID: ${videoPlayerId}`);
 
         if (this.element) {
@@ -60,17 +60,17 @@ export default class FluidPlayer implements GenericPlayer {
         this.registerFluidPlayerCallbacks();
     }
 
-    play() {
+    play(): void {
         logger.debug('Inside FluidPlayer.play');
         this.player?.play();
     }
 
-    pause() {
+    pause(): void {
         logger.debug('Inside FluidPlayer.pause');
         this.player?.pause();
     }
 
-    registerFluidPlayerCallbacks() {
+    registerFluidPlayerCallbacks(): void {
         this.player?.on('pause', () => {
             logger.log('Video is now paused.');
             this.isVideoPlaying = false;
@@ -105,7 +105,7 @@ export default class FluidPlayer implements GenericPlayer {
         });
     }
 
-    getIsVideoPlaying() {
+    getIsVideoPlaying(): boolean {
         logger.debug(
             `Inside FluidPlayer.getIsVideoPlaying. Returning the value: ${this.isVideoPlaying}`
         );

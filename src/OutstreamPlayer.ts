@@ -15,14 +15,14 @@ const isGenericConfiguration = (config: unknown): config is GenericConfiguration
     typeof config === 'object' && config !== null;
 
 export default class OutstreamPlayer {
-    private bid: Bid;
-    private elementId: string;
-    private config: GenericConfiguration;
-    private element: HTMLElement | null;
-    private playerAvailable: boolean;
-    private isVideoPausedDueToScroll: boolean;
-    private player: GenericPlayer;
-    private videoPlayerId?: string;
+    public bid: Bid;
+    public elementId: string;
+    public config: GenericConfiguration;
+    public element: HTMLElement | null;
+    public playerAvailable: boolean;
+    public isVideoPausedDueToScroll: boolean;
+    public player: GenericPlayer;
+    public videoPlayerId?: string;
 
     constructor(bid: unknown, elementId: unknown, config?: unknown) {
         logger.debug(

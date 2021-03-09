@@ -126,7 +126,7 @@ export const fluidPlayerConfig = (
         }
     };
 
-    // Immutability at its finest
+    // Make this immutability one day
     let ad;
     if (!(bid.ad === undefined || bid.ad === null)) {
         logger.log('Bid object contains bid.ad with value: ' + bid.ad);

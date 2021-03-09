@@ -24,14 +24,6 @@ export const getOffset = (element: HTMLElement): { top: number; left: number } =
     logger.debug('Inside Utils.getOffset for element: ' + JSON.stringify(element));
     const scrollLeft = window.pageXOffset ?? document.documentElement.scrollLeft;
     const scrollTop = window.pageYOffset ?? document.documentElement.scrollTop;
-    // Check if element is not present
-    if (element === undefined || element === null) {
-        logger.warn('No element was passed to the Utils.getOffset method as a parameter.');
-        return {
-            top: scrollTop,
-            left: scrollLeft
-        };
-    }
     const rect = element.getBoundingClientRect();
     return {
         top: rect.top + scrollTop,
@@ -42,17 +34,9 @@ export const getOffset = (element: HTMLElement): { top: number; left: number } =
 export const isOnScreen = (elementId: string): boolean => {
     logger.debug('Inside Utils.isOnScreen for element ID: ' + elementId);
     // if the element doesn't exist, abort
-    if (
-        typeof elementId !== 'string' ||
-        elementId.length === 0 ||
-        document.getElementById(elementId) === null
-    ) {
-        logger.warn('No element present with element ID: ' + elementId);
-        return false;
-    }
     const element = document.getElementById(elementId);
-
     if (!element) {
+        logger.warn('No element present with element ID: ' + elementId);
         return false;
     }
 

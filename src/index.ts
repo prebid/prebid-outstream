@@ -3,9 +3,15 @@ import logger from './Logger';
 import { Bid } from './types/bid';
 import { GenericConfiguration } from './GenericConfiguration';
 
-declare const window: {
-    outstreamPlayer: (bid: Bid, elementId: string, config: GenericConfiguration) => OutstreamPlayer;
+export type OutStreamPlayerWindow = {
+    outstreamPlayer?: (
+        bid: Bid,
+        elementId: string,
+        config: GenericConfiguration
+    ) => OutstreamPlayer;
 };
+
+declare const window: Window & OutStreamPlayerWindow;
 
 window.outstreamPlayer =
     window.outstreamPlayer ||

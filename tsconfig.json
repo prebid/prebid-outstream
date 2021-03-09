@@ -11,9 +11,15 @@
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     "strict": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ]
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./test/**/*",
+    "./__mocks__/**/*"
   ]
 }

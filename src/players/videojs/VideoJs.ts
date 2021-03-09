@@ -4,16 +4,23 @@ import { GenericConfiguration } from '../../GenericConfiguration';
 import { Bid } from '../../types/bid';
 
 export default class VideoJs implements GenericPlayer {
+    bid?: Bid;
+    elementId?: string;
+    genericConfiguration?: GenericConfiguration;
+
     constructor() {
         logger.debug('Inside videojs player constructor.');
     }
 
     generatePlayerConfig = (
-        _bid: Bid,
-        _elementId: string,
-        _genericConfiguration: GenericConfiguration
+        bid: Bid,
+        elementId: string,
+        genericConfiguration: GenericConfiguration
     ) => {
         logger.debug('Inside VideoJs.generatePlayerConfig method.');
+        this.bid = bid;
+        this.elementId = elementId;
+        this.genericConfiguration = genericConfiguration;
     };
 
     setupPlayer(videoPlayerId: string) {
