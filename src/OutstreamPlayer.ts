@@ -3,7 +3,7 @@ import { getPlayer as getConfiguredPlayer } from './PlayerFactory';
 import logger from './Logger';
 import { GenericPlayer } from './players/GenericPlayer';
 import { Bid } from './types/bid';
-import { isOnScreen } from './Utils';
+import { isOnScreen } from './utils/Utils';
 
 const isBidObject = (bid: unknown): bid is Bid =>
     typeof bid === 'object' && bid !== null && !Array.isArray(bid) ? true : false;

@@ -12,8 +12,8 @@ jest.mock('../src/PlayerFactory', () => ({
     })
 }));
 
-import { isOnScreen } from '../src/Utils';
-jest.mock('../src/Utils');
+import { isOnScreen } from '../src/utils/Utils';
+jest.mock('../src/utils/Utils');
 
 import logger from '../src/Logger';
 import { GenericConfiguration } from '../src/GenericConfiguration';

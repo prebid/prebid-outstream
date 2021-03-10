@@ -1,4 +1,4 @@
-import logger from './Logger';
+import logger from '../Logger';
 
 declare const document: Document & {
     mozCancelFullScreen?: () => Promise<void>;

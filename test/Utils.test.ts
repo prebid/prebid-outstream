@@ -1,4 +1,4 @@
-import { getOffset, getScrollTop, isOnScreen } from '../src/Utils';
+import { getOffset, getScrollTop, isOnScreen } from '../src/utils/Utils';
 jest.mock('../src/Logger');
 
 describe('Test cases for Utils.js file', () => {
