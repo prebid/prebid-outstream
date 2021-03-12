@@ -58,7 +58,7 @@ The project allows the user to provide configuration at two levels:
 ### Build Time Configuration
 To provide the configuration at build time use the **.env.development** and **env.production** files for development and production modes respectively. Some of the available options are:
 
-##### Base Player
+#### Base Player
 This project allows user to select the base player of his choice from the available player list. If your favourite player is not available in the supported player list and you are interested in contributing to the project to provide its support, then please refer the document [How to add a new player support](https://github.com/prebid/prebid-outstream/blob/master/src/players/README.md).
 
 The user needs to provide his selected player in **SELECTED_PLAYER** environment variable from the given supported player list.
@@ -70,6 +70,17 @@ The user needs to provide his selected player in **SELECTED_PLAYER** environment
 *Note 1:* At present, we only fully support Fluid player as Video JS player is not fully implemented. We are looking for your help in adding support to other major players.
 
 *Note 2:* By default, we are choosing Fluid player as the base player for outstream renderer.
+
+#### Viewability implementation
+
+The video player will only initialize, and start and stop accordingly, if it is in the user's viewport. The way this is implemented can be configured via the `VIEWABILITY_IMPLEMENTATION` environment variable.
+
+**Supported viewability implementations**
+
++ `GPT_EVENT` – Uses the google publisher-tag's [SlotVisibilityChangedEvent](https://developers.google.com/publisher-tag/reference#googletag.events.slotvisibilitychangedevent). If you use the google publisher tag anyway, this should be your preferred choice.
++ `INTERSECTION_OBSERVER` – Uses the browser's [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API). Does not support IE11.
++ `MANUAL_SCROLL_CHECK` – This is the default, but should not be your first choice. It is slow and not very performant, but supports IE11 and probably most other  browsers.
+
 
 ### Runtime Configuration
 User can provide some configurations to the outstream player on runtime while calling the global function window.outstreamPlayer(). The supported parameters for this are defined in GenericConfiguration class. At present, the following configurations are supported:

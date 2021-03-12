@@ -12,12 +12,17 @@ jest.mock('../src/PlayerFactory', () => ({
     })
 }));
 
-import { isOnScreen } from '../src/utils/Utils';
-jest.mock('../src/utils/Utils');
+import { onVisibilityChangedViaManualScrollCheck } from '../src/utils/onVisibilityChanged/ViaManualScrollCheck';
+jest.mock('../src/utils/onVisibilityChanged/ViaManualScrollCheck');
 
 import logger from '../src/Logger';
 import { GenericConfiguration } from '../src/GenericConfiguration';
 jest.mock('../src/Logger');
+
+const mockIsOnScreen = (isOnScreen: boolean) =>
+    (onVisibilityChangedViaManualScrollCheck as jest.Mock).mockImplementation(
+        (_elementId, listener) => listener(isOnScreen)
+    );
 
 describe('Test cases for OutstreamPlayer.js file', () => {
     const bid = {
@@ -88,36 +93,41 @@ describe('Test cases for OutstreamPlayer.js file', () => {
             expect(val).toBeUndefined();
         });
 
-        test('it should call setupPlayer method', () => {
-            (isOnScreen as jest.Mock).mockImplementation(() => true);
-            const setupPlayerMock = (outstreamPlayer.setupPlayer = jest.fn());
+        describe('with MANUAL_SCROLL_CHECK', () => {
+            beforeEach(() => {
+                process.env.VIEWABILITY_IMPLEMENTATION = 'MANUAL_SCROLL_CHECK';
+                outstreamPlayer = new OutstreamPlayer(bid, elementId, genericConfiguration);
+            });
 
-            outstreamPlayer.insertPlayer();
-            expect(outstreamPlayer.setupPlayer).toHaveBeenCalledTimes(1);
+            test('it should call setupPlayer method', () => {
+                mockIsOnScreen(true);
+                const setupPlayerMock = (outstreamPlayer.setupPlayer = jest.fn());
 
-            (isOnScreen as jest.Mock).mockReset();
-            setupPlayerMock.mockReset();
+                outstreamPlayer.insertPlayer();
+                expect(outstreamPlayer.setupPlayer).toHaveBeenCalledTimes(1);
+
+                setupPlayerMock.mockReset();
+            });
+
+            test('it should not call setupPlayer method', () => {
+                mockIsOnScreen(false);
+                const setupPlayerSpy = jest.fn();
+                outstreamPlayer.setupPlayer = () => setupPlayerSpy();
+
+                outstreamPlayer.insertPlayer();
+                expect(setupPlayerSpy).toHaveBeenCalledTimes(0);
+
+                setupPlayerSpy.mockReset();
+            });
         });
 
-        test('it should not call setupPlayer method', () => {
-            (isOnScreen as jest.Mock).mockImplementation(() => false);
-            const setupPlayerSpy = jest.fn();
-            outstreamPlayer.setupPlayer = () => setupPlayerSpy();
+        test('it should call setupVisibilityChangedListener method', () => {
+            const setupVisibilityChangedListenerMock = (outstreamPlayer.setupVisibilityChangedListener = jest.fn());
 
             outstreamPlayer.insertPlayer();
-            expect(setupPlayerSpy).toHaveBeenCalledTimes(0);
+            expect(outstreamPlayer.setupVisibilityChangedListener).toHaveBeenCalledTimes(1);
 
-            (isOnScreen as jest.Mock).mockReset();
-            setupPlayerSpy.mockReset();
-        });
-
-        test('it should call setupEventListener method', () => {
-            const setupEventListenerMock = (outstreamPlayer.setupEventListener = jest.fn());
-
-            outstreamPlayer.insertPlayer();
-            expect(outstreamPlayer.setupEventListener).toHaveBeenCalledTimes(1);
-
-            setupEventListenerMock.mockReset();
+            setupVisibilityChangedListenerMock.mockReset();
         });
     });
 
@@ -160,75 +170,15 @@ describe('Test cases for OutstreamPlayer.js file', () => {
         });
     });
 
-    describe('setupEventListener', () => {
+    describe('setupVisibilityChangedListener', () => {
         beforeEach(() => {
             (logger.debug as jest.Mock).mockReset();
             (logger.log as jest.Mock).mockReset();
         });
 
         test('it should return undefined', () => {
-            let val = outstreamPlayer.setupEventListener();
+            let val = outstreamPlayer.setupVisibilityChangedListener();
             expect(val).toBeUndefined();
-        });
-
-        test('it should call addEventListener for scroll', () => {
-            window.addEventListener = jest.fn();
-
-            outstreamPlayer.setupEventListener();
-            expect(window.addEventListener).toHaveBeenCalledTimes(1);
-            expect(window.addEventListener).toHaveBeenNthCalledWith(
-                1,
-                'scroll',
-                expect.any(Function)
-            );
-        });
-
-        test('it should execute event listener for scroll', () => {
-            outstreamPlayer.setupEventListener();
-            global.window.dispatchEvent(new Event('scroll'));
-            expect(logger.log).toHaveBeenNthCalledWith(1, 'Scroll event listener called!');
-        });
-
-        test('it should execute event listener for scroll when element is on screen', () => {
-            (isOnScreen as jest.Mock).mockImplementation(() => true);
-
-            outstreamPlayer.setupEventListener();
-            global.window.dispatchEvent(new Event('scroll'));
-            expect(logger.log).toHaveBeenNthCalledWith(1, 'Scroll event listener called!');
-            expect(logger.log).toHaveBeenNthCalledWith(2, 'Element is visible on the player.');
-
-            (isOnScreen as jest.Mock).mockReset();
-        });
-
-        test('it should execute event listener for scroll when element is not on screen', () => {
-            (isOnScreen as jest.Mock).mockImplementation(() => false);
-
-            outstreamPlayer.setupEventListener();
-            global.window.dispatchEvent(new Event('scroll'));
-            expect(logger.log).toHaveBeenNthCalledWith(1, 'Scroll event listener called!');
-            expect(logger.log).toHaveBeenNthCalledWith(2, 'Element is not visible on the screen.');
-
-            (isOnScreen as jest.Mock).mockReset();
-        });
-
-        test('it should execute event listener for scroll when element is not on screen and video is playing', () => {
-            (isOnScreen as jest.Mock).mockImplementation(() => false);
-            outstreamPlayer.playerAvailable = true;
-            outstreamPlayer.player.getIsVideoPlaying = mockGetIsVideoPlaying.mockReturnValueOnce(
-                true
-            );
-
-            outstreamPlayer.setupEventListener();
-            global.window.dispatchEvent(new Event('scroll'));
-            expect(logger.log).toHaveBeenNthCalledWith(1, 'Scroll event listener called!');
-            expect(logger.log).toHaveBeenNthCalledWith(2, 'Element is not visible on the screen.');
-            expect(logger.log).toHaveBeenNthCalledWith(
-                3,
-                'Player is not visible on the screen, so pause the video.'
-            );
-
-            (isOnScreen as jest.Mock).mockReset();
-            (outstreamPlayer.player.getIsVideoPlaying as jest.Mock).mockReset();
         });
     });
 

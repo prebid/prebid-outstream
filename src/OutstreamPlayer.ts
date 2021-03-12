@@ -3,7 +3,7 @@ import { getPlayer as getConfiguredPlayer } from './PlayerFactory';
 import logger from './Logger';
 import { GenericPlayer } from './players/GenericPlayer';
 import { Bid } from './types/bid';
-import { isOnScreen } from './utils/Utils';
+import { onVisibilityChanged } from './utils/onVisibilityChanged';
 
 const isBidObject = (bid: unknown): bid is Bid =>
     typeof bid === 'object' && bid !== null && !Array.isArray(bid) ? true : false;
@@ -65,12 +65,7 @@ export default class OutstreamPlayer {
 
     insertPlayer() {
         logger.debug('Inside OutstreamPlayer.insertPlayer method.');
-
-        if (isOnScreen(this.elementId)) {
-            logger.log('Element is visible on the screen on document load, so setup the player.');
-            this.setupPlayer();
-        }
-        this.setupEventListener();
+        this.setupVisibilityChangedListener();
     }
 
     setupPlayer() {
@@ -95,13 +90,11 @@ export default class OutstreamPlayer {
         }
     }
 
-    setupEventListener() {
-        logger.debug('Inside OutstreamPlayer.setupEventListener method.');
+    setupVisibilityChangedListener() {
+        logger.debug('Inside OutstreamPlayer.setupVisibilityChangedListener method.');
 
-        window.addEventListener('scroll', () => {
-            logger.log('Scroll event listener called!');
-            // Player div is visible on the scren
-            if (isOnScreen(this.elementId)) {
+        onVisibilityChanged(this.elementId, isVisible => {
+            if (isVisible) {
                 /* Pass element id/class you want to check */
                 logger.log('Element is visible on the player.');
                 if (this.playerAvailable) {
