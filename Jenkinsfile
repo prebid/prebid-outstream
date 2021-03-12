@@ -14,6 +14,10 @@ pipeline {
         MINIO_PATH = "prebid-outstream"
     }
 
+    tools {
+        nodejs 'nodejs-14.5.0'
+    }
+
     options {
         disableConcurrentBuilds()
     }
