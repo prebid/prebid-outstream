@@ -1,3 +1,25 @@
+This repository was initially cloned from https://github.com/prebid/prebid-outstream.
+
+The following steps can be used to pull updates from the github repository, by creating a local branch named "github", which is tracking the github repository.
+
+```
+# add github remote as "sync"
+git remote add sync https://github.com/prebid/prebid-outstream
+
+# setup local "github" branch to track "sync" remote's "master" branch
+git branch --track github sync/master
+
+# switch to the new branch
+git checkout github
+
+# pull from github
+git pull
+
+# rebase updates to master branch
+git checkout master
+git rebase github
+```
+
 # Prebid Outstream Renderer
 
 > A free and open source library for publishers to quickly implement outstream renderer.
