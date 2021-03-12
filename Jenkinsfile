@@ -7,7 +7,7 @@ pipeline {
         // for integration tests
         CI = "Jenkins"
         // for slack
-        SERVICE_NAME = "prebid-oustream"
+        SERVICE_NAME = "prebid-outstream"
 
         // upload paths
         MINIO_BUCKET = "assets.h5v.eu"
