@@ -1,0 +1,13 @@
+version: '3'
+
+volumes:
+    deps:
+
+services:
+    outstream:
+        image: node:14.15.4
+        volumes:
+            - .:/usr/src/app
+            - deps:/usr/src/app/node_modules
+        working_dir: /usr/src/app
+        command: npm run build

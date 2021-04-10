@@ -1,7 +1,6 @@
 import GenericPlayer from '../GenericPlayer';
 import fluidPlayer from 'fluid-player';
 import FluidPlayerConfig from './FluidPlayerConfig';
-import '~/fluid-player/src/css/fluidplayer.css';
 import logger from '../../Logger';
 import utils from '../../Utils';
 import './fluidPlayer.css';

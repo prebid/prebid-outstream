@@ -10,4 +10,7 @@ module.exports = {
             path: './.env.development',
         })
     ],
+    devServer: {
+        contentBase: './dist'
+    },
 };
