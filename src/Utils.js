@@ -16,7 +16,7 @@ class Utils {
     }
 
     getOffset(element) {
-        logger.debug("Inside Utils.getOffset for element: " + JSON.stringify(element));
+        logger.debug("Inside Utils.getOffset for element: " + (element && element.id));
         var scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         // Check if element is not present
