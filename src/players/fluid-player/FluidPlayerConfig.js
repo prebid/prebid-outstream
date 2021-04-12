@@ -1,4 +1,5 @@
 import logger from '../../Logger';
+import merge from 'lodash.merge'
 
 export default class FluidPlayerConfig{
     constructor(bid, elementId, genericConfiguration){
@@ -117,6 +118,9 @@ export default class FluidPlayerConfig{
             showCardBoardView:      false,
             showCardBoardJoystick:  false
         };
+
+        // Allow player config overrides
+        merge(this, genericConfiguration.playerConfigOverrides);
 
         let ad;
         if( !(bid.ad === undefined || bid.ad === null) ){

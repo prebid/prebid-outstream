@@ -42,6 +42,7 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
-    "fluid-player": "^3.0.4"
+    "fluid-player": "^3.0.4",
+    "lodash.merge": "^4.6.2"
   }
 }

@@ -34,7 +34,8 @@ renderer: {
                     autoPlay: true,
                     preload: true,
                     mute: false,
-                    adText: 'This is sample adtext.'
+                    adText: 'This is sample adtext.',
+                    playerConfigOverrides: {}
                 }
                 // Call to Global object of renderer.
                 // Takes bid, element ID and configuration object as parameters
@@ -83,6 +84,7 @@ User can provide some configurations to the outstream player on runtime while ca
 + `preload` - Sets the preload parameter on video tag. (Default: true)
 + `mute` - Set this parameter to true to have the video muted by default. (Default: true)
 + `adText` - To set the custom text when an in-stream ad plays. (Default: '' - an empty string)
++ `playerConfigOverrides` - To set overrides on the player config. This is to hook into events and/or set styles needed. This is a deep copy, and will only override values set in object. It will not unset already defined values.
 
 *Note 1:* Providig these parameters is completely optional, in which case we will use there default values.
 

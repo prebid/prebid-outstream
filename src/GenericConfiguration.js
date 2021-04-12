@@ -34,5 +34,10 @@ export default class GenericConfiguration {
         this.adText =  ( typeof config.adText === 'string' ) ?
             config.adText :
             '';
+
+        // Object type
+        this.playerConfigOverrides = ( typeof config.playerConfigOverrides === 'object') ?
+            config.playerConfigOverrides :
+            {};
     }
 }
