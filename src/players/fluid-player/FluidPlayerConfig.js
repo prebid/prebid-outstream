@@ -59,6 +59,9 @@ export default class FluidPlayerConfig{
                 autoHideTimeout:    5, // Default 3
                 animated:           true // Default true
             },
+            contextMenu: {
+                controls: false,
+            },
             captions: {
                 play:               'Play',
                 pause:              'Pause',
@@ -77,13 +80,13 @@ export default class FluidPlayerConfig{
                 volume:             false, // Default true
                 quality:            false, // Default true
                 speed:              false, // Default true
-                theatre:            false // Default true
+                theatre:            false  // Default true
             },
             allowTheatre:           true, // Default true
             theatreSettings: {
                 width:              '100%', // Default '100%'
-                height:             '60%', // Default '60%'
-                marginTop:          10, // Default 0
+                height:             '60%',  // Default '60%'
+                marginTop:          10,     // Default 0
                 horizontalAlign:    'center' // 'left', 'right' or 'center'
             },
             playbackRateEnabled:    false, // Default false
