@@ -36,8 +36,8 @@ export default class GenericConfiguration {
             '';
 
         // Object type
-        this.playerConfigOverrides = ( typeof config.playerConfigOverrides === 'object') ?
-            config.playerConfigOverrides :
+        this.playerOverrides = ( typeof config.playerOverrides === 'object') ?
+            config.playerOverrides :
             {};
     }
 }

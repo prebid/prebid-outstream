@@ -120,7 +120,7 @@ export default class FluidPlayerConfig{
         };
 
         // Allow player config overrides
-        merge(this, genericConfiguration.playerConfigOverrides);
+        merge(this, genericConfiguration.playerOverrides);
 
         let ad;
         if( !(bid.ad === undefined || bid.ad === null) ){

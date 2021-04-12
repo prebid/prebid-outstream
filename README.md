@@ -84,9 +84,9 @@ User can provide some configurations to the outstream player on runtime while ca
 + `preload` - Sets the preload parameter on video tag. (Default: true)
 + `mute` - Set this parameter to true to have the video muted by default. (Default: true)
 + `adText` - To set the custom text when an in-stream ad plays. (Default: '' - an empty string)
-+ `playerConfigOverrides` - To set overrides on the player config. This is to hook into events and/or set styles needed. This is a deep copy, and will only override values set in object. It will not unset already defined values.
++ `playerOverrides` - To set overrides on the player config. This is to hook into events and/or set styles needed. This is a deep copy, and will only override values set in object. It will not unset already defined values.
 
-*Note 1:* Providig these parameters is completely optional, in which case we will use there default values.
+*Note 1:* Providing these parameters is completely optional, in which case we will use there default values.
 
 *Note 2:* While providing custom values to above parameters, please make sure to provide these values with proper datatype otherwise default values will be used.
 
