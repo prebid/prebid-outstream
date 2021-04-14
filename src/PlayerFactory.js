@@ -11,6 +11,12 @@ logger.info("Conditional import of fluid player as environment variable process.
 import FluidPlayer from './players/fluid-player/FluidPlayer';
 // #endif
 
+// #if process.env.SELECTED_PLAYER === 'JWPLAYER'
+logger.info("Conditional import of jwplayer as environment variable process.env.SELECTED_PLAYER value is: " + process.env.SELECTED_PLAYER);
+import JWPlayer from './players/jwplayer/JWPlayer';
+// #endif
+
+
 // Factory pattern.
 // Returns the actual player object.
 export default class PlayerFactory{
@@ -24,6 +30,9 @@ export default class PlayerFactory{
         case 'VIDEO_JS':
             logger.log("VIDEO_JS selected.");
             return new VideoJs();
+        case 'JWPLAYER':
+            logger.log("JWPLAYER selected.");
+            return new JWPlayer();
         default:
             logger.log("Default player selected.");
             return new FluidPlayer();
