@@ -5,7 +5,6 @@ export default class VideoJsConfig{
     constructor(bid, elementId, genericConfiguration){
         videojs.log.level('debug');
         this.controls = true;
-        this.autoplay = true;
         this.preload = 'none';
         this.height = genericConfiguration.height;
         this.width = genericConfiguration.width;
@@ -14,7 +13,6 @@ export default class VideoJsConfig{
             vastClient: {
                 adsEnabled: true,
                 playAdAlways: true,
-                verbosity: 4,
                 initialAudio: 'off',
             }
         };

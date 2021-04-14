@@ -53,15 +53,15 @@ export default class VideoJs extends GenericPlayer{
 
         const video = document.getElementById(videoPlayerId);
 
-        video.className += ' video-js';
-        logger.log("adding videojs to element", videoPlayerId, this.element.className);
+        video.className += ' video-js vjs-big-play-centered';
 
         this.player = videojs(videoPlayerId, this.playerConfig);
-        this.player.src("//d2zihajmogu5jn.cloudfront.net/tiny.mp4");
-        this.player.on('error', e => console.log('vjs error:', e));
+        this.player.src("https://d2zihajmogu5jn.cloudfront.net/tiny.mp4");
+        this.player.on('error', e => console.log('vjs error:', e, this.player.error()));
         this.player.on('vast.adError', e => console.log('vjs ad error:', e));
         this.player.on(["adFinished", "vast.contentStart"], () => {
-            this.player.pause(); // don't play the video ever
+            // don't play the video ever
+            this.player.pause();
             this.player.dispose();
         });
     }
