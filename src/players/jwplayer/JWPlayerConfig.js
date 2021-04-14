@@ -6,7 +6,8 @@ export default class JWPlayerConfig{
         this.playlist = [{
             file: "https://d2zihajmogu5jn.cloudfront.net/tiny.mp4",
         }];
-        this.aspectratio = '16:9';
+
+        this.mute = genericConfiguration.mute;
         this.autostart = true;
         this.width = genericConfiguration.width;
         this.height = genericConfiguration.height;

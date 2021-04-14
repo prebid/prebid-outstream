@@ -1,7 +1,6 @@
 import GenericPlayer from '../GenericPlayer';
 import JWPlayerConfig from './JWPlayerConfig';
 import logger from '../../Logger';
-import utils from '../../Utils';
 
 export default class JWPlayer extends GenericPlayer{
     constructor(){
@@ -53,12 +52,12 @@ export default class JWPlayer extends GenericPlayer{
             script.src = "https://cdn.jwplayer.com/libraries/lqsWlr4Z.js";
             script.onload = () => {
                 this.player = window.jwplayer(videoPlayerId).setup(this.playerConfig);
-                this.registerCallbacks();
+                this.registerCallbacks(videoPlayerId);
             }
             document.body.appendChild(script);
         } else if (window.jwplayer) {
             this.player = window.jwplayer(videoPlayerId).setup(this.playerConfig);
-            this.registerCallbacks();
+            this.registerCallbacks(videoPlayerId);
         }
     }
 
@@ -76,30 +75,27 @@ export default class JWPlayer extends GenericPlayer{
         }
     }
 
-    registerCallbacks() {
-        this.player.on('pause', () => {
-            logger.log('Video is now paused.');
+    registerCallbacks(videoPlayerId) {
+        // Stop content from playing
+        const cleanup = () => {
+            logger.log('Ad completed, cleaning up player...');
             this.isVideoPlaying = false;
-        });
+            this.player.pause();
+            this.player.remove();
 
-        this.player.on('play', () => {
-            logger.log('Video is now playing - playing.');
-            this.isVideoPlaying = true;
-        });
-
-        this.player.on('complete', () => {
-            logger.log('Video is now ended.');
-            this.isVideoPlaying = false;
-            if(this.player) {
-                // Exit fullscreen mode
-                logger.log('Exit full screen mode to continue using normal mode.');
-                utils.closeFullscreen();
+            // Remove video elem
+            const video = document.getElementById(videoPlayerId);
+            if (video) {
+                video.remove();
             }
-        });
+        }
+
+        this.player.on('adComplete', cleanup)
+        this.player.on('play', cleanup)
     }
 
     getIsVideoPlaying(){
-        logger.debug("Inside JWPlayer.getIsVideoPlaying. Returning the value: ", this.isVideoPlaying);
+        logger.debug("Inside getIsVideoPlaying. Returning the value: ", this.isVideoPlaying);
         return this.isVideoPlaying;
     }
 }
