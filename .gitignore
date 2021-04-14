@@ -2,3 +2,4 @@ node_modules/
 dist/
 coverage/
 docker-compose.override.yml
+.DS_Store

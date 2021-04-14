@@ -42,7 +42,9 @@
     "webpack-visualizer-plugin": "^0.1.11"
   },
   "dependencies": {
+    "@prebid/videojs-vast": "git+https://github.com/prebid/videojs-mailonline-plugin.git#v1.3.18",
     "fluid-player": "^3.0.4",
-    "lodash.merge": "^4.6.2"
+    "lodash.merge": "^4.6.2",
+    "video.js": "^7.11.8"
   }
 }
