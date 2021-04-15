@@ -9,7 +9,4 @@ module.exports = {
             path: './.env.production',
         })
     ],
-    output: {
-        filename: 'prebid-video-renderer.js',
-    }
 };

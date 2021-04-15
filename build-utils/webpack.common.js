@@ -1,7 +1,6 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
 
 module.exports = {
     entry: './src/index.js',
@@ -38,9 +37,6 @@ module.exports = {
             title: 'Hello Webpack bundled JavaScript Project',
             template: './src/index.html'
         }),
-        new webpack.optimize.LimitChunkCountPlugin({
-            maxChunks: 1
-        })
     ],
     output: {
         path: path.resolve(__dirname, '../', 'dist'),
