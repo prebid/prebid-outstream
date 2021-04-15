@@ -67,6 +67,7 @@ The user needs to provide his selected player in **SELECTED_PLAYER** environment
 **Supported Players**
 + `FLUID_PLAYER` - Fluid player
 + `VIDEO_JS` - Video JS
++ `JWPLAYER` - JWPlayer
 
 *Note 1:* At present, we only fully support Fluid player as Video JS player is not fully implemented. We are looking for your help in adding support to other major players.
 
