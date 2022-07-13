@@ -22,8 +22,8 @@ Prebid.js requires an outstream renderer URL in *renderer.url* object and outstr
 renderer: {
     url: 'bundle.js',   // URL of the renderer
     render: function (bid) {
-        try {
-            setTimeout( ()=>{
+        bid.renderer.push(function() {
+            try {
                 // Object to configure the behaviour of outstream renderer from HTML page.
                 var obj = {
                     width: 640,
@@ -38,13 +38,12 @@ renderer: {
                 }
                 // Call to Global object of renderer.
                 // Takes bid, element ID and configuration object as parameters
-                outstreamPlayer(bid, 'video1', obj);
-            }, 3000)
-            
-        } catch (e) {
-            console.error(e);
-            console.error("Error in ad rendering!");
-        }
+                window.outstreamPlayer.player(bid, 'video1', obj);
+            } catch (e) {
+                console.error(e);
+                console.error("Error in ad rendering!");
+            }
+        })
     }
 }       
 ```

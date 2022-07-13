@@ -44,7 +44,9 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, '../', 'dist'),
         publicPath: '/',
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        library: 'outstreamPlayer',
+        libraryTarget: 'var'
     },
     devServer: {
         contentBase: './dist'
