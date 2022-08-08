@@ -59,8 +59,16 @@ export default class OutstreamPlayer {
         this.player = getConfiguredPlayer();
         logger.log(`Player object: ${JSON.stringify(this.player)}`);
 
-        this.player.generatePlayerConfig(this.bid, this.elementId, this.config);
-        this.insertPlayer();
+        if (this.bid.hasOwnProperty('vastUrl') && this.bid.vastUrl && !this.bid.hasOwnProperty('vastXml') && !this.bid.hasOwnProperty('ad')) {
+            logger.warn('Bid lacking vastXml and ad properties but included vastUrl. Trying to fetch vastXml from vastUrl.', this.bid);
+            this.fetchVastXml(this.bid.vastUrl, function () {
+                this.player.generatePlayerConfig(this.bid, this.elementId, this.config);
+                this.insertPlayer();
+            });
+        } else {
+            this.player.generatePlayerConfig(this.bid, this.elementId, this.config);
+            this.insertPlayer();
+        }
     }
 
     insertPlayer() {
@@ -156,4 +164,35 @@ export default class OutstreamPlayer {
             throw new Error(`No element is present with provided element ID: ${this.elementId}`);
         }
     }
+
+    fetchVastXml(vastUrl: string, callback: Function) {
+        logger.debug('Inside OutstreamPlayer.fetchVastXml method.');
+        let xhr = new XMLHttpRequest();
+        xhr.open('GET', vastUrl, true);
+        xhr.responseType = 'document';
+        xhr.overrideMimeType('text/xml');
+        xhr.onload = () => {
+            if (xhr.readyState === xhr.DONE) {
+                if (xhr.status === 200) {
+                    logger.log('OutstreamPlayer.fetchVastXml: Received XML response', xhr.responseXML.documentElement);
+                    const serializer = new XMLSerializer();
+                    this.bid.vastXml = serializer.serializeToString(xhr.responseXML.documentElement);
+                    callback.apply(this, []);
+                }
+            }
+        };
+
+        xhr.onerror = (err) => {
+            logger.error('OutstreamPlayer.fetchVastXml: fetching vastUrl error', err);
+            callback.apply(this, []);
+        };
+
+        xhr.ontimeout = () => {
+            logger.error('OutstreamPlayer.fetchVastXml: fetching vastUrl timed out');
+            callback.apply(this, []);
+        };
+
+        xhr.send();
+    }
+
 }

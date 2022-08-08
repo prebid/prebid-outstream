@@ -5,6 +5,11 @@
 export type Bid = Partial<{
     ad: string | null;
     vastXml: string;
+
+    /**
+     * If no vastXml is provided this is used as a fallback to fetch the vast tag
+     */
+    vastUrl: string;
     id: string;
     impid: string;
     price: number;
