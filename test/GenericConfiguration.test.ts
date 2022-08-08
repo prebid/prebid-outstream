@@ -1,24 +1,8 @@
-import GenericConfiguration from '../src/GenericConfiguration';
+import { genericConfigurationWithDefaults } from '../src/GenericConfiguration';
 
-describe('Test cases for GenericConfiguration.js file', () => {
-
-    test('it should assign default values, if no object is provided', () => {
-        let obj = new GenericConfiguration();
-        expect(obj).toEqual({
-            width: 640,
-            height: 480,
-            vastTimeout: 5000,
-            maxAllowedVastTagRedirects: 3,
-            allowVpaid: false,
-            autoPlay: true,
-            preload: true,
-            mute: true,
-            adText: ''
-        });
-    });
-
+describe('Test cases for GenericConfiguration.ts file', () => {
     test('it should assign default values, if invalid object is provided', () => {
-        let obj = new GenericConfiguration({});
+        let obj = genericConfigurationWithDefaults({});
         expect(obj).toEqual({
             width: 640,
             height: 480,
@@ -33,7 +17,7 @@ describe('Test cases for GenericConfiguration.js file', () => {
     });
 
     test('it should assign default values for properties which are missing or have invalid datatypes', () => {
-        let obj = new GenericConfiguration({
+        let obj = genericConfigurationWithDefaults({
             width: '40',
             maxAllowedVastTagRedirects: 2,
             allowVpaid: 'true',
@@ -56,7 +40,7 @@ describe('Test cases for GenericConfiguration.js file', () => {
     });
 
     test('it should assign the provided values, if all properties are valid', () => {
-        let obj = new GenericConfiguration({
+        let obj = genericConfigurationWithDefaults({
             width: 40,
             height: 80,
             vastTimeout: 4000,

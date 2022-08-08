@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "allowJs": true,
+    "target": "es2015",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ]
+  },
+  "include": [
+    "./src/**/*",
+    "./test/**/*",
+    "./__mocks__/**/*"
+  ]
+}
