@@ -26,9 +26,9 @@ class Logger {
         this.logLevel = debugLevelFromQueryParam() || DEFAULT_LOG_LEVEL;
     }
 
-    log = (msg: string) => {
+    log = (msg: string, args?: any) => {
         if (this.logLevel >= LogLevel.log) {
-            console.log(this.prefixMessage('LOG', msg));
+            console.log(this.prefixMessage('LOG', msg), args);
         }
     };
 
@@ -38,13 +38,13 @@ class Logger {
         }
     };
 
-    warn = (msg: string) => {
+    warn = (msg: string, args?: any) => {
         if (this.logLevel >= LogLevel.warn) {
-            console.warn(this.prefixMessage('WARN', msg));
+            console.warn(this.prefixMessage('WARN', msg), args);
         }
     };
 
-    error = (msg: string) => {
+    error = (msg: string, args?: any) => {
         if (this.logLevel >= LogLevel.error) {
             console.error(this.prefixMessage('ERROR', msg));
         }

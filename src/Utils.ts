@@ -21,7 +21,7 @@ export const getScrollTop = (): number => {
 };
 
 export const getOffset = (element: HTMLElement): { top: number; left: number } => {
-    logger.debug('Inside Utils.getOffset for element: ' + JSON.stringify(element));
+    logger.debug('Inside Utils.getOffset for element');
     const scrollLeft = window.pageXOffset ?? document.documentElement.scrollLeft;
     const scrollTop = window.pageYOffset ?? document.documentElement.scrollTop;
     const rect = element.getBoundingClientRect();
