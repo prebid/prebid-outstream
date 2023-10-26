@@ -60,6 +60,24 @@ describe('Test cases for players/fluid-player/FluidPlayerConfig.js file', () => 
         expect(obj.vastOptions.adList[0].vastTag).toEqual(base64String);
     });
 
+    test('it should assign VAST Tag from bid.adResponse.ads[0].video.content if available', () => {
+        const vastTag = 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&cust_params=deployment%3Ddevsite%26sample_ct%3Dlinear&correlator=';
+        let bid = {
+            adResponse: {
+                ads: [
+                    {
+                        video: {
+                            content: vastTag
+                        }
+                    }
+                ]
+            }
+        };
+
+        let obj = fluidPlayerConfig(bid, elementId, genericConfiguration);
+        expect(obj.vastOptions.adList[0].vastTag).toEqual(vastTag);
+    });
+
     test('it should assign VAST Tag', () => {
         let bid = {
             ad:

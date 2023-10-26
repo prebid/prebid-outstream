@@ -58,12 +58,13 @@ export default class OutstreamPlayer {
         this.isVideoPausedDueToScroll = false;
         this.player = getConfiguredPlayer();
         logger.log(`Player object: ${JSON.stringify(this.player)}`);
+        const outerThis = this;
 
         if (this.bid.hasOwnProperty('vastUrl') && this.bid.vastUrl && !this.bid.hasOwnProperty('vastXml') && !this.bid.hasOwnProperty('ad')) {
             logger.warn('Bid lacking vastXml and ad properties but included vastUrl. Trying to fetch vastXml from vastUrl.', this.bid);
             this.fetchVastXml(this.bid.vastUrl, function () {
-                this.player.generatePlayerConfig(this.bid, this.elementId, this.config);
-                this.insertPlayer();
+                outerThis.player.generatePlayerConfig(outerThis.bid, outerThis.elementId, outerThis.config);
+                outerThis.insertPlayer();
             });
         } else {
             this.player.generatePlayerConfig(this.bid, this.elementId, this.config);
@@ -180,7 +181,7 @@ export default class OutstreamPlayer {
         xhr.overrideMimeType('text/xml');
         xhr.onload = () => {
             if (xhr.readyState === xhr.DONE) {
-                if (xhr.status === 200) {
+                if (xhr.status === 200 && xhr.responseXML) {
                     logger.log('OutstreamPlayer.fetchVastXml: Received XML response', xhr.responseXML.documentElement);
                     const serializer = new XMLSerializer();
                     this.bid.vastXml = serializer.serializeToString(xhr.responseXML.documentElement);

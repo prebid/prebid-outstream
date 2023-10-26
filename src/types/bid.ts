@@ -1,5 +1,12 @@
 export type Bid = Partial<{
     ad: string | null;
+    adResponse: {
+        ads: {
+            video: {
+                content: string | null
+            } | null
+        }[] | null
+    } | null;
     vastXml: string;
 
     /**
