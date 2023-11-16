@@ -8,7 +8,7 @@ describe('Test cases for Logger.js file', () => {
             let result = logger.log('Test message.');
             expect(result).toBeUndefined();
             expect(console.log).toHaveBeenCalledTimes(1);
-            expect(console.log).toHaveBeenNthCalledWith(1, 'PLAYER-LOG: Test message.');
+            expect(console.log).toHaveBeenNthCalledWith(1, 'PLAYER-LOG: Test message.', undefined);
 
             consoleLogMock.mockReset();
         });
@@ -34,7 +34,7 @@ describe('Test cases for Logger.js file', () => {
             let result = logger.warn('Test message.');
             expect(result).toBeUndefined();
             expect(console.warn).toHaveBeenCalledTimes(1);
-            expect(console.warn).toHaveBeenNthCalledWith(1, 'PLAYER-WARN: Test message.');
+            expect(console.warn).toHaveBeenNthCalledWith(1, 'PLAYER-WARN: Test message.', undefined);
 
             consoleWarnMock.mockReset();
         });
@@ -47,7 +47,7 @@ describe('Test cases for Logger.js file', () => {
             let result = logger.error('Test message.');
             expect(result).toBeUndefined();
             expect(console.error).toHaveBeenCalledTimes(1);
-            expect(console.error).toHaveBeenNthCalledWith(1, 'PLAYER-ERROR: Test message.');
+            expect(console.error).toHaveBeenNthCalledWith(1, 'PLAYER-ERROR: Test message.', undefined);
 
             consoleErrorMock.mockReset();
         });

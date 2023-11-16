@@ -58,6 +58,14 @@ export const fluidPlayerConfig = (
                 }
             }
         },
+        captions: {
+            play: 'Play',
+            pause: 'Pause',
+            mute: 'Mute',
+            unmute: 'Unmute',
+            fullscreen: 'Fullscreen',
+            exitFullscreen: 'Exit Fullscreen'
+        },
         layoutControls: {
             playButtonShowing: true,
             autoPlay: false,
@@ -68,14 +76,6 @@ export const fluidPlayerConfig = (
                 autoHide: true,
                 autoHideTimeout: 5,
                 animated: true
-            },
-            captions: {
-                play: 'Play',
-                pause: 'Pause',
-                mute: 'Mute',
-                unmute: 'Unmute',
-                fullscreen: 'Fullscreen',
-                exitFullscreen: 'Exit Fullscreen'
             },
             controlForwardBackward: {
                 show: false
@@ -128,7 +128,10 @@ export const fluidPlayerConfig = (
 
     // Make this immutability one day
     let ad;
-    if (!(bid.ad === undefined || bid.ad === null)) {
+    if (bid.adResponse?.ads && bid.adResponse?.ads[0]?.video?.content !== undefined) {
+        logger.log('Bid object contains bid.adResponse: ' + bid.ad);
+        ad = bid.adResponse.ads[0].video.content;
+    } else if (!(bid.ad === undefined || bid.ad === null)) {
         logger.log('Bid object contains bid.ad with value: ' + bid.ad);
         ad = bid.ad;
     } else if (!(bid.vastXml === undefined || bid.vastXml === null)) {

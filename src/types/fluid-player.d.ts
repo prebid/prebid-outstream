@@ -43,6 +43,14 @@ declare module 'fluid-player' {
                 vastVideoEndedCallback: () => void;
             };
         };
+        captions: {
+            play: string;
+            pause: string;
+            mute: string;
+            unmute: string;
+            fullscreen: string;
+            exitFullscreen: string;
+        };
         layoutControls: {
             playButtonShowing: boolean;
             autoPlay: boolean;
@@ -62,14 +70,6 @@ declare module 'fluid-player' {
                  * Default true
                  */
                 animated: boolean;
-            };
-            captions: {
-                play: string;
-                pause: string;
-                mute: string;
-                unmute: string;
-                fullscreen: string;
-                exitFullscreen: string;
             };
             controlForwardBackward: {
                 /**

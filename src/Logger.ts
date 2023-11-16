@@ -46,7 +46,7 @@ class Logger {
 
     error = (msg: string, args?: any) => {
         if (this.logLevel >= LogLevel.error) {
-            console.error(this.prefixMessage('ERROR', msg));
+            console.error(this.prefixMessage('ERROR', msg), args);
         }
     };
 
