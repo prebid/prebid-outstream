@@ -6,7 +6,7 @@ import logger from '../../Logger';
 import './fluidPlayer.css';
 import { GenericConfiguration } from '../../GenericConfiguration';
 import { Bid } from '../../types/bid';
-import { closeFullscreen } from '../../Utils';
+import { closeFullscreen } from '../../utils/Utils';
 
 export default class FluidPlayer implements GenericPlayer {
     public fluidPlayerConfig?: FluidPlayerConfig;
